@@ -10,6 +10,11 @@ $ git clone https://github.com/Abhijit-Kadalli/SERP-web-crawler.git
 $ cd SERP-web-crawler
 $ pip install -r requirements.txt
 ```
+
+Add your Google API key by replacing 'YOUR_API_KEY' in SERP-web-crawler/channel_extracter.py
+```python
+api_key = 'YOUR_API_KEY'
+```
 ## Usage
 
 query: help="Query string for Google search" <br/>
