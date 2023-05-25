@@ -3,6 +3,7 @@ import urllib
 import pandas as pd
 from requests_html import HTML
 from requests_html import HTMLSession
+import argparse
 
 from channel_extracter import *
 
@@ -27,7 +28,6 @@ def get_source(url):
 def scrape_google(query,num_links):
     query = urllib.parse.quote_plus(query)
     links = []
-    #num_links = 1000  # Number of links to retrieve
     num_results_per_page = 10  # Number of results per page
 
     while len(links) < num_links:
@@ -55,23 +55,30 @@ def scrape_google(query,num_links):
 
     return links[:num_links]
 
-scraped_links = scrape_google("site:youtube.com openinapp.co",1000)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Scrape Google search results and extract video links.")
+    parser.add_argument("query", help="Query string for Google search")
+    parser.add_argument("num_links", type=int, help="Number of links to retrieve")
 
-# add the video links to a dataframe
-df = pd.DataFrame(scraped_links, columns=['video_link'])
+    args = parser.parse_args()
 
-# export the dataframe to a csv file
-df.to_csv('video_links.csv', index=False)
+    scraped_links = scrape_google(args.query, args.num_links)
 
-channel_links = []
-for link in scraped_links:
-    channel_link = get_account_link(link)
-    if channel_link:
-        channel_links.append(channel_link)
-        print(channel_link)
+    # add the video links to a dataframe
+    df = pd.DataFrame(scraped_links, columns=['video_link'])
 
-# add the channel links to a dataframe
-df = pd.DataFrame(channel_links, columns=['channel_link'])
+    # export the dataframe to a csv file
+    df.to_csv('video_links.csv', index=False)
 
-# export the dataframe to a csv file
-df.to_csv('channel_links.csv', index=False)
+    channel_links = []
+    for link in scraped_links:
+        channel_link = get_account_link(link)
+        if channel_link:
+            channel_links.append(channel_link)
+            print(channel_link)
+
+    # add the channel links to a dataframe
+    df = pd.DataFrame(channel_links, columns=['channel_link'])
+
+    # export the dataframe to a csv file
+    df.to_csv('channel_links.csv', index=False)
