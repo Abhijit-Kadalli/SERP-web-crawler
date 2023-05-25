@@ -1,4 +1,3 @@
-
 import requests
 import urllib
 import pandas as pd
@@ -51,8 +50,6 @@ def scrape_google(query,num_links):
         for url in page_links[:]:
             if url.startswith(google_domains):
                 page_links.remove(url)
-            else:
-                url = get_account_link(url)
 
         links.extend(page_links)
 
@@ -60,9 +57,21 @@ def scrape_google(query,num_links):
 
 scraped_links = scrape_google("site:youtube.com openinapp.co",1000)
 
+# add the video links to a dataframe
+df = pd.DataFrame(scraped_links, columns=['video_link'])
 
-# Create a Pandas dataframe from the scraped links
-df = pd.DataFrame({'link': scraped_links})
+# export the dataframe to a csv file
+df.to_csv('video_links.csv', index=False)
 
-# Export the dataframe to a CSV file
-df.to_csv('scraped_links.csv', index=False)
+channel_links = []
+for link in scraped_links:
+    channel_link = get_account_link(link)
+    if channel_link:
+        channel_links.append(channel_link)
+        print(channel_link)
+
+# add the channel links to a dataframe
+df = pd.DataFrame(channel_links, columns=['channel_link'])
+
+# export the dataframe to a csv file
+df.to_csv('channel_links.csv', index=False)

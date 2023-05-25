@@ -2,30 +2,35 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # Set up your API key
-api_key = 'YOUR_API_KEY'  # Replace with your actual API key
+api_key = 'AIzaSyAqvR9s0xNnnlQlet20QNw9srzl66x8K-Y'  # Replace with your actual API key
 
 # Create a YouTube service object
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 # Function to retrieve the YouTube account link from a video link
 def get_account_link(video_url):
-    try:
-        # Extract the video ID from the URL
-        video_id = video_url.split('?v=')[1]
+    try: 
+        if video_url.split('?v=')[1]:
+            # Extract the video ID from the URL
+            video_id = video_url.split('?v=')[1]
 
-        # Call the API to get video details
-        video_response = youtube.videos().list(
-            part='snippet',
-            id=video_id
-        ).execute()
+            # Call the API to get video details
+            video_response = youtube.videos().list(
+                part='snippet',
+                id=video_id
+            ).execute()
 
-        # Extract the channel ID from the video details
-        channel_id = video_response['items'][0]['snippet']['channelId']
+            # Extract the channel ID from the video details
+            channel_id = video_response['items'][0]['snippet']['channelId']
 
-        # Construct the YouTube account link
-        account_link = f'https://www.youtube.com/channel/{channel_id}'
+            # Construct the YouTube account link
+            account_link = f'https://www.youtube.com/channel/{channel_id}'
 
-        return account_link
+            return account_link
+        elif "youtube.com/user/" in video_url or "youtube.com/channel/" in video_url or "youtube.com/c/" in video_url:
+            return video_url
+        else:
+            return None
 
     except HttpError as e:
         print('An HTTP error occurred:')
