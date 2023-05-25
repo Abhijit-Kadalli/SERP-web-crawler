@@ -1,6 +1,8 @@
 # SERP-web-crawler
 This Python script is a web crawler designed to scrape YouTube channel links from search results. It uses web scraping techniques to fetch the search results for a specific query and extracts the relevant YouTube channel links.
 
+## Using on Google Colab
+Provided a Google Colab file which has the same code implemented and doesn't need installation of dependency
 
 ## Installation
 Provide instructions on how to install and set up your project. Include any dependencies or prerequisites that need to be installed. Step-by-step instructions or commands are helpful here.
