@@ -12,7 +12,7 @@ $ pip install -r requirements.txt
 ```
 ## Usage
 
-query: help="Query string for Google search"
+query: help="Query string for Google search" \\
 num_links: type=int, help="Number of links to retrieve"
 
 ```bash
