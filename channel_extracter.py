@@ -10,7 +10,7 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 # Function to retrieve the YouTube account link from a video link
 def get_account_link(video_url):
     try: 
-        if video_url.split('?v=')[1]:
+        if '?v=' in video_url:
             # Extract the video ID from the URL
             video_id = video_url.split('?v=')[1]
 
