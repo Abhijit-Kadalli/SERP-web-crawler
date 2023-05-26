@@ -61,8 +61,8 @@ def scrape_google(query,num_links):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scrape Google search results and extract video links.")
-    parser.add_argument("query", help="Query string for Google search")
-    parser.add_argument("num_links", type=int, help="Number of links to retrieve")
+    parser.add_argument("--query", help="Query string for Google search")
+    parser.add_argument("--num_links", type=int, help="Number of links to retrieve")
 
     args = parser.parse_args()
 
