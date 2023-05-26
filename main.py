@@ -71,10 +71,10 @@ if __name__ == "__main__":
     df = pd.DataFrame(scraped_links, columns=['video_link'])
 
     # export the dataframe to a csv file
-    df.to_csv('video_links.csv', index=False)
+    df.to_csv('data/video_links.csv', index=False)
 
     # add the channel links to a dataframe
     df = pd.DataFrame(scraped_account_links, columns=['channel_link'])
 
     # export the dataframe to a csv file
-    df.to_csv('channel_links.csv', index=False)
+    df.to_csv('data/channel_links.csv', index=False)
