@@ -25,5 +25,5 @@ query: help="Query string for Google search" <br/>
 num_links: type=int, help="Number of links to retrieve"
 
 ```bash
-python main.py -query <query> -num_links <num_links>
+python main.py <query> <num_links>
 ```
