@@ -28,6 +28,7 @@ def get_source(url):
 def scrape_google(query,num_links):
     query = urllib.parse.quote_plus(query)
     links = []
+    account_link = []
     num_results_per_page = 10  # Number of results per page
 
     while len(links) < num_links:
@@ -50,10 +51,12 @@ def scrape_google(query,num_links):
         for url in page_links[:]:
             if url.startswith(google_domains):
                 page_links.remove(url)
+            else:
+                account_link.append(get_account_link(url))
 
         links.extend(page_links)
 
-    return links[:num_links]
+    return links[:num_links], account_link
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scrape Google search results and extract video links.")
@@ -62,7 +65,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    scraped_links = scrape_google(args.query, args.num_links)
+    scraped_links, scraped_account_links = scrape_google(args.query, args.num_links)
 
     # add the video links to a dataframe
     df = pd.DataFrame(scraped_links, columns=['video_link'])
@@ -70,15 +73,8 @@ if __name__ == "__main__":
     # export the dataframe to a csv file
     df.to_csv('video_links.csv', index=False)
 
-    channel_links = []
-    for link in scraped_links:
-        channel_link = get_account_link(link)
-        if channel_link:
-            channel_links.append(channel_link)
-            print(channel_link)
-
     # add the channel links to a dataframe
-    df = pd.DataFrame(channel_links, columns=['channel_link'])
+    df = pd.DataFrame(scraped_account_links, columns=['channel_link'])
 
     # export the dataframe to a csv file
     df.to_csv('channel_links.csv', index=False)
