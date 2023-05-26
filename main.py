@@ -45,7 +45,8 @@ def scrape_google(query,num_links):
             'http://webcache.googleusercontent.',
             'https://policies.google.',
             'https://support.google.',
-            'https://maps.google.'
+            'https://maps.google.',
+            'https://translate.google.'
         )
 
         for url in page_links[:]:
